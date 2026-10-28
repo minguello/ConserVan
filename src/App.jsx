@@ -552,7 +552,12 @@ export default function App() {
 
   return (
     <div style={s.app}>
-      <aside style={{ ...s.sidebar, ...(menuOpen ? s.sidebarOpen : {}) }}>
+      
+<aside
+  data-menu-open={menuOpen ? 'true' : 'false'}
+  style={{ ...s.sidebar, ...(menuOpen ? s.sidebarOpen : {}) }}
+>
+
         <div style={s.brand}>
           <div style={s.logo}>CV</div>
           <div>
