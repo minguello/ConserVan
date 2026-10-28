@@ -599,7 +599,13 @@ export default function App() {
         <header style={s.topbar}>
           <button
             style={s.menuToggle}
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => {
+  if (window.innerWidth <= 760) {
+    setMenuOpen(!menuOpen);
+  } else {
+    setSidebarCollapsed(!sidebarCollapsed);
+  }
+}}
             aria-label="Abrir o cerrar menú"
           >
             ☰
