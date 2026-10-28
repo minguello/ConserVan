@@ -1528,19 +1528,23 @@ if (
 ) {
   const mobileStyles = document.createElement('style');
   mobileStyles.id = 'conservan-responsive';
-  mobileStyles.textContent = `
+ 
+mobileStyles.textContent = `
     @media (max-width: 760px) {
       main { margin-left: 0 !important; }
       main > header { padding: 0 16px !important; }
       main > header > button { display: block !important; }
       main > div { padding: 18px !important; }
+
       aside { display: none !important; }
-      aside[style*="display: flex"] {
+
+      aside[data-menu-open="true"] {
         display: flex !important;
         width: 250px !important;
         box-shadow: 10px 0 30px #142c4e33;
       }
     }
   `;
+
   document.head.appendChild(mobileStyles);
 }
