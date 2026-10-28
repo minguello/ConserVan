@@ -105,6 +105,9 @@ export default function App() {
   const [alumnoForm, setAlumnoForm] = useState({ ...alumnoVacio });
 
   const [clases, setClases] = useState([]);
+  const [ofertas, setOfertas] = useState([]);
+const [ofertasLoading, setOfertasLoading] = useState(false);
+const [ofertasError, setOfertasError] = useState('');
   const [inscripciones, setInscripciones] = useState([]);
   const [clasesLoading, setClasesLoading] = useState(false);
   const [clasesError, setClasesError] = useState('');
@@ -159,6 +162,9 @@ export default function App() {
       void cargarAlumnos();
       void cargarClases();
     }
+    if (active === 'desplazamientos') {
+    void cargarOfertas();
+  }
   }, [session, active]);
 
   async function handleLogin(event) {
@@ -302,6 +308,28 @@ export default function App() {
   }
 
  
+  async function cargarOfertas() {
+    setOfertasLoading(true);
+    setOfertasError('');
+
+    const { data, error } = await supabase
+      .from('ride_offers')
+      .select('*')
+      .order('travel_date', { ascending: true })
+      .order('departure_time', { ascending: true });
+
+    if (error) {
+      setOfertasError(
+        'No se pudieron cargar las ofertas: ' + error.message
+      );
+      setOfertas([]);
+    } else {
+      setOfertas(data || []);
+    }
+
+    setOfertasLoading(false);
+  }
+
   function editarClase(clase) {
     setClaseEditando(clase.id);
 
@@ -1167,9 +1195,87 @@ export default function App() {
               </button>
             </section>
           ) : (
+           
+          ) : active === 'desplazamientos' ? (
+            <section style={s.panelWide}>
+              <h1 style={s.panelTitle}>Desplazamientos</h1>
+              <p style={s.panelText}>
+                Ofertas de desplazamiento publicadas por las familias del grupo.
+              </p>
+
+              {ofertasLoading && <p>Cargando ofertas...</p>}
+
+              {ofertasError && (
+                <p style={s.loginError}>{ofertasError}</p>
+              )}
+
+              {!ofertasLoading &&
+                !ofertasError &&
+                ofertas.length === 0 && (
+                  <p style={s.panelText}>
+                    Todavía no hay ofertas de desplazamiento disponibles.
+                  </p>
+                )}
+
+              {ofertas.length > 0 && (
+                <div style={s.tableWrap}>
+                  <table style={s.table}>
+                    <thead>
+                      <tr style={s.tableHead}>
+                        <th style={s.th}>Fecha</th>
+                        <th style={s.th}>Trayecto</th>
+                        <th style={s.th}>Hora</th>
+                        <th style={s.th}>Plazas</th>
+                        <th style={s.th}>Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ofertas.map((oferta) => (
+                        <tr key={oferta.id}>
+                          <td style={s.td}>{oferta.travel_date}</td>
+                          <td style={s.td}>{oferta.direction}</td>
+                          <td style={s.td}>
+                            {String(oferta.departure_time || '').slice(0, 5)}
+                          </td>
+                          <td style={s.td}>{oferta.seats_available}</td>
+                          <td style={s.td}>{oferta.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              <button
+                style={s.backButton}
+                onClick={() => navigate('inicio')}
+              >
+                ← Volver al inicio
+              </button>
+            </section>
+          ) : (
             <section style={s.panel}>
               <div style={s.panelIcon}>
                 {sections.find((x) => x.id === active)?.icon}
+              </div>
+              <h1 style={s.panelTitle}>{current?.title}</h1>
+              <p style={s.panelText}>{current?.text}</p>
+              <div style={s.preparedBox}>
+                <strong>Contenido previsto</strong>
+                {current?.items.map((item) => (
+                  <div key={item} style={s.preparedItem}>
+                    <span>○</span> {item}
+                  </div>
+                ))}
+              </div>
+              <p style={s.comingSoon}>
+                Esta sección todavía está en preparación.
+              </p>
+              <button style={s.backButton} onClick={() => navigate('inicio')}>
+                ← Volver al inicio
+              </button>
+            </section>
+
               </div>
               <h1 style={s.panelTitle}>{current?.title}</h1>
               <p style={s.panelText}>{current?.text}</p>
