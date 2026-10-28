@@ -19,7 +19,7 @@ jobs:
           cache: npm
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install
 
       - name: Compilar aplicacion web
         run: npm run build
