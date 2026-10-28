@@ -85,6 +85,7 @@ const diasSemana = [
 export default function App() {
   const [active, setActive] = useState('inicio');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const [session, setSession] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
