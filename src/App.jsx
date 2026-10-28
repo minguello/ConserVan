@@ -1182,6 +1182,12 @@ const s = {
     zIndex: 5,
   },
   sidebarOpen: { display: 'flex' },
+  sidebarCollapsed: {
+  width: 0,
+  padding: 0,
+  overflow: 'hidden',
+  transition: 'width 0.25s ease, padding 0.25s ease',
+},
   brand: {
     display: 'flex',
     alignItems: 'center',
