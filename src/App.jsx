@@ -556,7 +556,11 @@ export default function App() {
       
 <aside
   data-menu-open={menuOpen ? 'true' : 'false'}
-  style={{ ...s.sidebar, ...(menuOpen ? s.sidebarOpen : {}) }}
+  style={{
+  ...s.sidebar,
+  ...(menuOpen ? s.sidebarOpen : {}),
+  ...(sidebarCollapsed ? s.sidebarCollapsed : {}),
+}}
 >
 
         <div style={s.brand}>
