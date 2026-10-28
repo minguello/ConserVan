@@ -591,7 +591,11 @@ export default function App() {
         </button>
       </aside>
 
-      <main style={s.main}>
+      <main style={{
+  ...s.main,
+  marginLeft: sidebarCollapsed ? 0 : 250,
+  transition: 'margin-left 0.25s ease'
+}}>
         <header style={s.topbar}>
           <button
             style={s.menuToggle}
