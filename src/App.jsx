@@ -1138,6 +1138,35 @@ export default function App() {
               )}
             </section>
           ) : (
+  
+          ) : active === 'desplazamientos' ? (
+            <section style={s.panel}>
+              <div style={s.panelIcon}>🚗</div>
+              <h1 style={s.panelTitle}>Desplazamientos</h1>
+              <p style={s.panelText}>
+                Consulta las ofertas de desplazamiento de tu grupo.
+              </p>
+
+              <div style={s.preparedBox}>
+                <strong>Ofertas disponibles</strong>
+                <p>
+                  Aquí aparecerán los desplazamientos publicados por las
+                  familias del grupo.
+                </p>
+                <p>
+                  Próximo paso: conectar esta pantalla con Supabase para
+                  consultar y publicar ofertas reales.
+                </p>
+              </div>
+
+              <button
+                style={s.backButton}
+                onClick={() => navigate('inicio')}
+              >
+                ← Volver al inicio
+              </button>
+            </section>
+          ) : (
             <section style={s.panel}>
               <div style={s.panelIcon}>
                 {sections.find((x) => x.id === active)?.icon}
@@ -1159,6 +1188,7 @@ export default function App() {
                 ← Volver al inicio
               </button>
             </section>
+
           )}
         </div>
       </main>
