@@ -1273,7 +1273,7 @@ const s = {
     gap: 15,
   },
   menuToggle: {
-    display: 'none',
+    display: 'block',
     border: 0,
     background: 'transparent',
     fontSize: 22,
